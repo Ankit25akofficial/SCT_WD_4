@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task 04 – To-Do Web App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #23243a 80%, #181c22 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .task-section {
+      background: linear-gradient(120deg, #23243a 80%, #181c22 100%);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px #00e6ff33, 0 2px 16px #ff408144;
+      padding: 36px 32px 36px 32px;
+      position: relative;
+      overflow: hidden;
+      margin: 40px auto;
+      max-width: 950px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .task-header {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+    .task-badge {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 1.3em;
+      color: #fff;
+      border: 2.5px solid #ff4081;
+      border-radius: 10px;
+      padding: 8px 28px;
+      letter-spacing: 2px;
+      background: rgba(255,64,129,0.08);
+      box-shadow: 0 2px 12px #ff408144;
+      text-shadow: 0 2px 8px #ff408144;
+    }
+    .task-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 36px;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .task-title-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      min-width: 220px;
+    }
+    .todo-icon {
+      width: 80px;
+      height: 80px;
+      filter: drop-shadow(0 0 12px #00e6ff88);
+      margin-bottom: 6px;
+    }
+    .task-title {
+      font-family: 'Orbitron', 'Montserrat', Arial, sans-serif;
+      font-size: 2em;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #00e6ff, #ff4081 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 24px #00e6ff88, 0 2px 8px #ff408144;
+      text-align: center;
+    }
+    .task-desc {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.15em;
+      color: #e0e0e0;
+      max-width: 480px;
+      line-height: 1.7;
+      background: rgba(24,28,34,0.85);
+      border-radius: 14px;
+      padding: 22px 28px;
+      box-shadow: 0 2px 12px #00e6ff22;
+      min-width: 280px;
+    }
+    .task-desc ul {
+      margin: 12px 0 12px 22px;
+      padding: 0;
+    }
+    .task-desc li {
+      margin-bottom: 8px;
+      font-size: 1em;
+      color: #00e6ff;
+      font-weight: 600;
+      text-shadow: 0 2px 8px #00e6ff44;
+    }
+    .task-desc .highlight {
+      color: #ff4081;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .task-circles {
+      position: absolute;
+      top: 0; right: 0; left: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.18;
+      border: 2.5px solid #00e6ff;
+      animation: floatCircle 6s infinite alternate;
+    }
+    .circle1 {
+      width: 120px; height: 120px;
+      top: -40px; right: -40px;
+      border-color: #00e6ff;
+      animation-delay: 0s;
+    }
+    .circle2 {
+      width: 80px; height: 80px;
+      bottom: -30px; left: -30px;
+      border-color: #ff4081;
+      animation-delay: 2s;
+    }
+    @keyframes floatCircle {
+      from { transform: translateY(0) scale(1);}
+      to   { transform: translateY(24px) scale(1.08);}
+    }
+    @media (max-width: 900px) {
+      .task-content {
+        flex-direction: column;
+        gap: 18px;
+        align-items: center;
+      }
+      .task-title {
+        font-size: 1.3em;
+      }
+      .task-desc {
+        font-size: 1em;
+        padding: 14px 8px;
+        min-width: unset;
+      }
+      .task-section {
+        padding: 18px 6vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="task-section">
+    <div class="task-header">
+      <span class="task-badge">TASK 04</span>
+    </div>
+    <div class="task-content">
+      <div class="task-title-block">
+        <img src="https://cdn-icons-png.flaticon.com/512/3176/3176363.png" alt="To-Do Icon" class="todo-icon" />
+        <span class="task-title">TO-DO WEB APP</span>
+      </div>
+      <div class="task-desc">
+        <p>
+          <span class="highlight">Objective:</span> Develop a professional to-do web application that enables users to efficiently manage their daily tasks.
+        </p>
+        <ul>
+          <li>📝 Add and organize tasks in customizable lists</li>
+          <li>✅ Mark tasks as completed or pending</li>
+          <li>✏️ Edit and update task details</li>
+          <li>📅 Set due date & time for each task</li>
+          <li>🔔 Stay on top of your schedule with a clean, intuitive interface</li>
+        </ul>
+        <p>
+          <span class="highlight">Goal:</span> Empower users to boost productivity by providing a seamless and interactive task management experience.
+        </p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 32px;">
+      <button 
+        onclick="window.open('todo-app.html', '_blank')"
+        style="
+          padding: 16px 36px;
+          font-size: 1.2em;
+          font-family: 'Montserrat', Arial, sans-serif;
+          font-weight: bold;
+          color: #fff;
+          background: linear-gradient(90deg, #00e6ff 60%, #ff4081 100%);
+          border: none;
+          border-radius: 12px;
+          box-shadow: 0 4px 24px #00e6ff55;
+          cursor: pointer;
+          transition: background 0.3s, transform 0.2s;
+        "
+        onmouseover="this.style.background='linear-gradient(90deg, #ff4081 60%, #00e6ff 100%)'; this.style.transform='scale(1.07)'"
+        onmouseout="this.style.background='linear-gradient(90deg, #00e6ff 60%, #ff4081 100%)'; this.style.transform='scale(1)'"
+      >
+        🚀 Open To-Do Web App
+      </button>
+    </div>
+    <div class="task-circles">
+      <div class="circle circle1"></div>
+      <div class="circle circle2"></div>
+    </div>
+  </div>
+</body>
+</html>

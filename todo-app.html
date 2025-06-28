@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do Web App | Task 04</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #23243a 80%, #181c22 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .todo-container {
+      background: rgba(30,34,60,0.98);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px #00e6ff33, 0 2px 16px #ff408144;
+      padding: 38px 28px 32px 28px;
+      margin: 48px 0;
+      min-width: 340px;
+      max-width: 95vw;
+      width: 400px;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .todo-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      justify-content: center;
+    }
+    .todo-header img {
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(0 0 8px #00e6ff88);
+    }
+    .todo-title {
+      font-family: 'Orbitron', 'Montserrat', Arial, sans-serif;
+      font-size: 1.5em;
+      font-weight: 800;
+      background: linear-gradient(90deg, #00e6ff, #ff4081 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 24px #00e6ff88, 0 2px 8px #ff408144;
+      letter-spacing: 2px;
+    }
+    .todo-form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .todo-form input[type="text"] {
+      flex: 1 1 120px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1.5px solid #00e6ff;
+      font-size: 1em;
+      font-family: 'Montserrat', Arial, sans-serif;
+      outline: none;
+      background: #181c22;
+      color: #fff;
+      transition: border 0.2s;
+    }
+    .todo-form input[type="text"]:focus {
+      border: 2px solid #ff4081;
+    }
+    .todo-form input[type="datetime-local"] {
+      padding: 8px 6px;
+      border-radius: 8px;
+      border: 1.5px solid #00e6ff;
+      background: #181c22;
+      color: #fff;
+      font-size: 0.95em;
+      font-family: 'Montserrat', Arial, sans-serif;
+      outline: none;
+    }
+    .todo-form button {
+      background: linear-gradient(90deg, #00e6ff 60%, #ff4081 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 1em;
+      font-weight: 700;
+      font-family: 'Montserrat', Arial, sans-serif;
+      cursor: pointer;
+      box-shadow: 0 2px 12px #00e6ff55, 0 2px 8px #ff408144;
+      transition: background 0.3s, transform 0.2s;
+      outline: none;
+    }
+    .todo-form button:hover {
+      background: linear-gradient(90deg, #ff4081 60%, #00e6ff 100%);
+      transform: scale(1.07);
+    }
+    .todo-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 340px;
+      overflow-y: auto;
+    }
+    .todo-item {
+      background: #181c22;
+      margin-bottom: 12px;
+      padding: 14px 12px 10px 12px;
+      border-radius: 10px;
+      box-shadow: 0 1px 8px #00e6ff22;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      border-left: 3px solid #00e6ff;
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .todo-main-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .todo-checkbox {
+      accent-color: #00e6ff;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    .todo-text {
+      flex: 1;
+      font-size: 1.1em;
+      color: #fff;
+      word-break: break-word;
+      transition: color 0.2s;
+    }
+    .todo-item.completed .todo-text {
+      color: #00e6ff99;
+      text-decoration: line-through;
+    }
+    .todo-date {
+      font-size: 0.95em;
+      color: #ff4081;
+      margin-left: 28px;
+    }
+    .todo-actions {
+      display: flex;
+      gap: 8px;
+      margin-left: auto;
+    }
+    .todo-actions button {
+      background: none;
+      border: none;
+      color: #00e6ff;
+      font-size: 1.1em;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .todo-actions button:hover {
+      background: #00e6ff22;
+      color: #ff4081;
+    }
+    .todo-edit-input {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1.5px solid #00e6ff;
+      background: #23243a;
+      color: #fff;
+      font-size: 1em;
+      font-family: 'Montserrat', Arial, sans-serif;
+      outline: none;
+      margin-right: 8px;
+    }
+    .empty-list {
+      color: #888;
+      text-align: center;
+      margin-top: 24px;
+      font-size: 1.1em;
+    }
+    @media (max-width: 600px) {
+      .todo-container {
+        padding: 18px 4vw;
+        min-width: unset;
+        width: 98vw;
+      }
+      .todo-title {
+        font-size: 1.1em;
+      }
+      .todo-form input[type="text"] {
+        font-size: 0.95em;
+      }
+      .todo-form button {
+        font-size: 0.95em;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="todo-container">
+    <div class="todo-header">
+      <img src="https://cdn-icons-png.flaticon.com/512/3176/3176363.png" alt="To-Do Icon" />
+      <span class="todo-title">TO-DO WEB APP</span>
+    </div>
+    <form class="todo-form" id="todoForm" autocomplete="off">
+      <input type="text" id="todoInput" placeholder="Add a new task..." required />
+      <input type="datetime-local" id="todoDate" />
+      <button type="submit">Add</button>
+    </form>
+    <ul class="todo-list" id="todoList"></ul>
+    <div class="empty-list" id="emptyListMsg">No tasks yet. Add your first task!</div>
+  </div>
+  <script>
+    // To-Do App Logic with Local Storage
+    const todoForm = document.getElementById('todoForm');
+    const todoInput = document.getElementById('todoInput');
+    const todoDate = document.getElementById('todoDate');
+    const todoList = document.getElementById('todoList');
+    const emptyListMsg = document.getElementById('emptyListMsg');
+
+    // Load from localStorage
+    let todos = [];
+    if (localStorage.getItem('todos')) {
+      try {
+        todos = JSON.parse(localStorage.getItem('todos'));
+      } catch (e) {
+        todos = [];
+      }
+    }
+
+    function saveTodos() {
+      localStorage.setItem('todos', JSON.stringify(todos));
+    }
+
+    function renderTodos() {
+      todoList.innerHTML = '';
+      if (todos.length === 0) {
+        emptyListMsg.style.display = 'block';
+        return;
+      }
+      emptyListMsg.style.display = 'none';
+      todos.forEach((todo, idx) => {
+        const li = document.createElement('li');
+        li.className = 'todo-item' + (todo.completed ? ' completed' : '');
+        // Main row: checkbox, text, actions
+        const mainRow = document.createElement('div');
+        mainRow.className = 'todo-main-row';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'todo-checkbox';
+        checkbox.checked = todo.completed;
+        checkbox.onchange = () => {
+          todo.completed = !todo.completed;
+          saveTodos();
+          renderTodos();
+        };
+
+        let textSpan;
+        if (todo.editing) {
+          const editInput = document.createElement('input');
+          editInput.type = 'text';
+          editInput.value = todo.text;
+          editInput.className = 'todo-edit-input';
+          editInput.onkeydown = (e) => {
+            if (e.key === 'Enter') saveEdit();
+            if (e.key === 'Escape') cancelEdit();
+          };
+          mainRow.appendChild(editInput);
+
+          const saveBtn = document.createElement('button');
+          saveBtn.innerHTML = '💾';
+          saveBtn.title = 'Save';
+          saveBtn.onclick = saveEdit;
+
+          const cancelBtn = document.createElement('button');
+          cancelBtn.innerHTML = '✖️';
+          cancelBtn.title = 'Cancel';
+          cancelBtn.onclick = cancelEdit;
+
+          mainRow.appendChild(saveBtn);
+          mainRow.appendChild(cancelBtn);
+
+          editInput.focus();
+
+          function saveEdit() {
+            const val = editInput.value.trim();
+            if (val) {
+              todo.text = val;
+              todo.editing = false;
+              saveTodos();
+              renderTodos();
+            }
+          }
+          function cancelEdit() {
+            todo.editing = false;
+            renderTodos();
+          }
+        } else {
+          textSpan = document.createElement('span');
+          textSpan.className = 'todo-text';
+          textSpan.textContent = todo.text;
+          mainRow.appendChild(checkbox);
+          mainRow.appendChild(textSpan);
+
+          const actions = document.createElement('div');
+          actions.className = 'todo-actions';
+
+          const editBtn = document.createElement('button');
+          editBtn.innerHTML = '✏️';
+          editBtn.title = 'Edit';
+          editBtn.onclick = () => {
+            todo.editing = true;
+            renderTodos();
+          };
+
+          const delBtn = document.createElement('button');
+          delBtn.innerHTML = '🗑️';
+          delBtn.title = 'Delete';
+          delBtn.onclick = () => {
+            todos.splice(idx, 1);
+            saveTodos();
+            renderTodos();
+          };
+
+          actions.appendChild(editBtn);
+          actions.appendChild(delBtn);
+          mainRow.appendChild(actions);
+        }
+
+        li.appendChild(mainRow);
+
+        if (todo.date) {
+          const dateDiv = document.createElement('div');
+          dateDiv.className = 'todo-date';
+          const d = new Date(todo.date);
+          dateDiv.textContent = 'Due: ' + d.toLocaleString();
+          li.appendChild(dateDiv);
+        }
+
+        todoList.appendChild(li);
+      });
+    }
+
+    todoForm.onsubmit = (e) => {
+      e.preventDefault();
+      const text = todoInput.value.trim();
+      if (!text) return;
+      todos.unshift({
+        text,
+        completed: false,
+        date: todoDate.value,
+        editing: false
+      });
+      todoInput.value = '';
+      todoDate.value = '';
+      saveTodos();
+      renderTodos();
+    };
+
+    // Save edits and deletions
+    window.addEventListener('beforeunload', saveTodos);
+
+    renderTodos();
+  </script>
+</body>
+</html>
